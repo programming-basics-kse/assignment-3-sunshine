@@ -51,6 +51,7 @@ with open(user_file, 'r') as athlet_file:
         for lines in csv_file:
             file_lines.append(lines)
 
+
 TEAM = header.index('Team')
 NOC = header.index('NOC')
 NAME = header.index('Name')
@@ -58,33 +59,33 @@ EVENT = header.index('Event')
 YEAR = header.index('Year')
 MEDAL = header.index('Medal')
 
-place_dict = {'Gold' : 1,
-              'Silver' : 2,
-              'Bronze' : 3,
-}
-medals_dict = {'Gold' : 0,
-              'Silver' : 0,
-              'Bronze' : 0}
+if arg.medals:
+    place_dict = {'Gold' : 1,
+                  'Silver' : 2,
+                  'Bronze' : 3,
+    }
+    medals_dict = {'Gold' : 0,
+                  'Silver' : 0,
+                  'Bronze' : 0}
 
-athletes_dict = {}
-for line in file_lines:
-    if line[YEAR] == user_year:
-        if (line[TEAM] == user_team or lines[NOC] == user_team) and line[MEDAL] in medals_dict:
+    athletes_dict = {}
+    for line in file_lines:
+        if line[YEAR] == user_year and (line[TEAM] == user_team or line[NOC] == user_team) and line[MEDAL] in medals_dict:
             athletes_dict[line[NAME]] = {'discipline' : line[EVENT],
                                         'medal' : line[MEDAL],
                                          'place' : place_dict[line[MEDAL]]}
 
-athletes_dict = dict(sorted(athletes_dict.items(), key=lambda x: x[1]['place']))
+    athletes_dict = dict(sorted(athletes_dict.items(), key=lambda x: x[1]['place']))
 
 
-for athletes in athletes_dict:
-    if athletes_dict[athletes]['medal'] in medals_dict:
-        medals_dict[athletes_dict[athletes]['medal']] += 1
-    else:
-        medals_dict[athletes_dict[athletes]['medal']] = 1
+    for athletes in athletes_dict:
+        if athletes_dict[athletes]['medal'] in medals_dict:
+            medals_dict[athletes_dict[athletes]['medal']] += 1
+        else:
+            medals_dict[athletes_dict[athletes]['medal']] = 1
 
-user_data = datas(athletes_dict, medals_dict, user_team, user_year)
-show_data(user_data)
+    user_data = datas(athletes_dict, medals_dict, user_team, user_year)
+    show_data(user_data)
 
 if arg.output:
     output(user_data, user_output_file)
