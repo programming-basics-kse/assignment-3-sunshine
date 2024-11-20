@@ -35,8 +35,8 @@ parser.add_argument('-output', nargs= 1, help='Input the output file')
 arg = parser.parse_args()
 
 user_file = arg.input_file
-user_team, user_year = arg.medals
-user_output_file = arg.output[0]
+
+
 
 file_lines = []
 with open(user_file, 'r') as athlet_file:
@@ -62,6 +62,7 @@ LOCATION = header.index('City')
 SEASON = header.index('Season')
 
 if arg.medals:
+    user_team, user_year = arg.medals
     place_dict = {'Gold' : 1,
                   'Silver' : 2,
                   'Bronze' : 3,
@@ -90,4 +91,5 @@ if arg.medals:
     show_data(user_data)
 
 if arg.output:
+    user_output_file = arg.output[0]
     output(user_data, user_output_file)
