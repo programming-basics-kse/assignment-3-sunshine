@@ -58,6 +58,8 @@ NAME = header.index('Name')
 EVENT = header.index('Event')
 YEAR = header.index('Year')
 MEDAL = header.index('Medal')
+LOCATION = header.index('City')
+SEASON = header.index('Season')
 
 if arg.medals:
     place_dict = {'Gold' : 1,
