@@ -67,25 +67,42 @@ medals_dict = {'Gold' : 0,
               'Silver' : 0,
               'Bronze' : 0}
 
-athletes_dict = {}
-for line in file_lines:
-    if line[YEAR] == user_year:
-        if (line[TEAM] == user_team or lines[NOC] == user_team) and line[MEDAL] in medals_dict:
-            athletes_dict[line[NAME]] = {'discipline' : line[EVENT],
-                                        'medal' : line[MEDAL],
-                                         'place' : place_dict[line[MEDAL]]}
+if arg.medals:
+    athletes_dict = {}
+    for line in file_lines:
+        if line[YEAR] == user_year:
+            if (line[TEAM] == user_team or lines[NOC] == user_team) and line[MEDAL] in medals_dict:
+                athletes_dict[line[NAME]] = {'discipline' : line[EVENT],
+                                            'medal' : line[MEDAL],
+                                             'place' : place_dict[line[MEDAL]]}
 
-athletes_dict = dict(sorted(athletes_dict.items(), key=lambda x: x[1]['place']))
+    athletes_dict = dict(sorted(athletes_dict.items(), key=lambda x: x[1]['place']))
 
 
-for athletes in athletes_dict:
-    if athletes_dict[athletes]['medal'] in medals_dict:
-        medals_dict[athletes_dict[athletes]['medal']] += 1
-    else:
-        medals_dict[athletes_dict[athletes]['medal']] = 1
+    for athletes in athletes_dict:
+        if athletes_dict[athletes]['medal'] in medals_dict:
+            medals_dict[athletes_dict[athletes]['medal']] += 1
+        else:
+            medals_dict[athletes_dict[athletes]['medal']] = 1
 
-user_data = datas(athletes_dict, medals_dict, user_team, user_year)
-show_data(user_data)
+    user_data = datas(athletes_dict, medals_dict, user_team, user_year)
+    show_data(user_data)
 
 if arg.output:
     output(user_data, user_output_file)
+
+elif arg.interactive:
+    while True:
+        user_country = input('Enter a country: ')
+        the_first_year = 0
+        country_olympiad = {}
+        for row in file_lines:
+            if row[TEAM] == user_country or row[NOC] == user_country:
+                pass
+
+# year and location winter & summer, medals
+# програма має виводити статистику цієї країни - перша участь у олімпіаді (рік та місце проведення),
+# найуспішніша олімпіада (за кількістю медалей, вивести це значення), найневдаліша, та середня кількість
+# медалей кожного типу на кожній олімпіаді
+
+
