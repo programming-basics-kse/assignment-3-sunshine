@@ -12,6 +12,13 @@ def datas (athletes_dictionary, medals_dictionary, team, year):
     data.append(f'\nThe total amount of the medals of the {team} team in {year}:\nGold: {medals_dictionary['Gold']}\nSilver: {medals_dictionary['Silver']}\nBronze: {medals_dictionary['Bronze']}')
     return data
 
+def datas_task_4(output_medals_list, user_country, year_1, summer_1, winter_1, avr):
+    data = []
+    data.append(f'The first year when {user_country} participated in Olympic year was {year_1}\nSummer location in {year_1}: {summer_1}\nWinter location in {year_1}: {winter_1}')
+    data.append(f'The most successful was {output_medals_list[0][0]}: {output_medals_list[0][1]} medals\nThe worst year was {output_medals_list[-1][0]} : {output_medals_list[-1][1]} medals')
+    data.append(f'The average amount of medals in {user_country}: {avr} medals')
+    return data
+
 def output(data, output_file):
     with open(output_file, 'w') as file:
         for chars in data:
@@ -40,11 +47,26 @@ def location_searcher(input_file_list, year, SEASON, LOCATION, YEAR):
                 year_place_winter.append(row[LOCATION])
     year_place_summer = set(year_place_summer)
     year_place_winter = set(year_place_winter)
+    if len(year_place_summer) == 0:
+        year_place_summer = f'this country does not participated in summer games in {year}'
+    if len(year_place_winter) == 0:
+        year_place_winter = f'this country does not participated in winter games in {year}'
     return year_place_summer, year_place_winter
 
+def user_country_validation(user_county):
+    country_list = ['NAM', 'JPN', 'PAR', 'POR', 'TUN', 'YEM', 'MKD', 'HON', 'FRG', 'YMD', 'BER', 'BAH', 'SAA', 'MAD', 'UGA', 'BEN', 'DJI', 'ESA', 'SVK', 'TTO', 'FRA', 'HUN', 'ROU', 'ANT', 'SEN', 'LTU', 'KOS', 'GUM', 'JOR', 'ARM', 'CYP', 'BIH', 'BDI', 'IRI', 'BOT', 'MOZ', 'ANG', 'USA', 'TAN', 'EST', 'BLR', 'GRE', 'BRA', 'CIV', 'MTN', 'ERI', 'MYA', 'NRU', 'SWZ', 'COK', 'SEY', 'PRK', 'UAR', 'CPV', 'NIG', 'BEL', 'CRO', 'NCA', 'KOR', 'KGZ', 'ISV', 'MLI', 'CRC', 'SAM', 'LCA', 'FSM', 'CGO', 'GBS', 'GHA', 'TKM', 'GRN', 'EGY', 'BOH', 'NBO', 'MAR', 'PAN', 'QAT', 'BIZ', 'LBA', 'MNE', 'CAN', 'URU', 'NZL', 'DMA', 'DOM', 'SCG', 'GUY', 'BOL', 'ANZ', 'BAR', 'MHL', 'BRU', 'ISR', 'GAB', 'THA', 'MAS', 'CHI', 'GER', 'TPE', 'WIF', 'SRB', 'MAW', 'KUW', 'GUI', 'LBR', 'ARG', 'IRL', 'KEN', 'VIN', 'POL', 'CAY', 'RUS', 'NFL', 'COM', 'YAR', 'GEO', 'AND', 'BUR', 'SOL', 'CRT', 'ALG', 'MON', 'IRQ', 'LIB', 'NEP', 'IVB', 'HKG', 'TUV', 'ROT', 'PAK', 'FIJ', 'SLO', 'JAM', 'UAE', 'VAN', 'VEN', 'TJK', 'LAO', 'ETH', 'SYR', 'UZB', 'PLW', 'MDA', 'IOA', 'TUR', 'ECU', 'MEX', 'INA', 'SGP', 'COL', 'KAZ', 'NED', 'GAM', 'CZE', 'TLS', 'KSA', 'CHN', 'NOR', 'CUB', 'GUA', 'COD', 'SUI', 'ESP', 'CAF', 'ZIM', 'URS', 'FIN', 'MRI', 'SUR', 'PNG', 'BAN', 'ASA', 'SRI', 'OMA', 'MLT', 'KIR', 'MDV', 'BRN', 'EUN', 'UNK', 'STP', 'SMR', 'YUG', 'VIE', 'NGR', 'AZE', 'ZAM', 'ARU', 'CAM', 'ALB', 'BUL', 'CHA', 'RWA', 'MGL', 'SOM', 'IND', 'GDR', 'RSA', 'GBR', 'HAI', 'TCH', 'LAT', 'LUX', 'PER', 'DEN', 'TOG', 'CMR', 'TGA', 'BHU', 'LES', 'ISL', 'SWE', 'PHI', 'AHO', 'PUR', 'LIE', 'AFG', 'RHO', 'UKR', 'VNM', 'AUT', 'MAL', 'PLE', 'GEQ', 'SSD', 'ITA', 'SLE', 'SUD', 'SKN', 'AUS',
+'France', 'Great Britain', 'Denmark', 'Cambodia', 'Lesotho', 'Oman', 'Israel', 'Cameroon', 'Morocco', 'Lebanon', 'Maldives', 'Dominican Republic', 'Zimbabwe', 'Mali', 'United Arab Emirates', 'Soviet Union', 'Turkey', 'Andorra', 'Costa Rica', 'Aruba', 'South Sudan', 'Bhutan', 'Russia', 'Greece', 'Kyrgyzstan', 'Chad', 'Japan', 'Italy', 'Venezuela', 'Moldova', 'Sri Lanka', 'Mauritius', 'Luxembourg', 'Seychelles', 'Belarus', 'China', 'Austria', 'Sierra Leone', 'Benin', 'Zambia', 'Estonia', 'Singapore', 'Brunei', 'Guatemala', 'Finland', 'Gambia', 'Liberia', 'Jamaica', 'Thailand', 'Monaco', 'Belize', 'Malawi', 'Bangladesh', 'Kiribati', 'Sao Tome and Principe', 'India', 'Uzbekistan', 'Czech Republic', 'Mongolia', 'Kosovo', 'Somalia', 'Albania', 'Sudan', 'United States', 'Turkmenistan', 'Madagascar', 'El Salvador', 'Egypt', 'Comoros', 'Palestine', 'Saudi Arabia', 'Malta', 'Angola', 'Spain', 'Saint Kitts and Nevis', 'Uruguay', 'Mauritania', 'Belgium', 'Germany', 'Czechoslovakia', 'Togo', 'Norway', 'Poland', 'Argentina', 'Saint Lucia', 'New Zealand', 'Grenada', 'Chile', 'Samoa', 'Trinidad and Tobago', 'Netherlands', 'Latvia', 'Peru', 'East Germany', 'Bosnia and Herzegovina', 'Namibia', 'Iceland', 'Cayman Islands', 'Laos', 'Syria', 'Tunisia', 'Switzerland', 'Mozambique', 'Armenia', 'Tajikistan', 'Suriname', 'Hungary', 'Botswana', 'Iraq', 'San Marino', 'Djibouti', 'Solomon Islands', 'Portugal', 'Senegal', 'Nigeria', 'Slovenia', 'Cyprus', 'Malaysia', 'Guinea', 'Brazil', 'Guam', 'Ghana', 'Vietnam', 'Paraguay', 'North Korea', 'Dominica', 'Vanuatu', 'Indonesia', 'Liechtenstein', 'Tuvalu', 'Algeria', 'Ecuador', 'South Korea', 'Bahamas', 'Kuwait', 'Slovakia', 'Tonga', 'Uganda', 'Kenya', 'Pakistan', 'Iran', 'Nicaragua', 'Nauru', 'Libya', 'Papua New Guinea', 'Georgia', 'Antigua and Barbuda', 'Yugoslavia', 'Bolivia', 'Guyana', 'Eritrea', 'Azerbaijan', 'Unified Team', 'Palau', 'Lithuania', 'Myanmar', 'Qatar', 'Bulgaria', 'Tanzania', 'Fiji', 'Burundi', 'Sweden', 'Barbados', 'Puerto Rico', 'Marshall Islands', 'Montenegro', 'Ethiopia', 'Cape Verde', 'Croatia', 'Ireland', 'Yemen', 'Central African Republic', 'Cuba', 'Burkina Faso', 'Ukraine', 'South Africa', 'Bahrain', 'Kazakhstan', 'Rwanda', 'Romania', 'Equatorial Guinea', 'Mexico', 'Canada', 'Colombia', 'Hong Kong', 'Afghanistan', 'Honduras', 'Australia', 'Panama', 'Serbia', 'Niger', 'Jordan', 'Philippines', 'Haiti', 'Saint Vincent and the Grenadines', 'Nepal', 'Gabon']
+    while not user_county in country_list:
+        user_county = input('Enter a country: ').capitalize()
+    return user_county
 
-parser = argparse.ArgumentParser('Olympic Athletes', 'This program will help you to...')
-#add in the description any other features which you and me will add :)
+def continue_validation(decision):
+    while not decision == 'yes' and decision == 'not':
+        decision = input('Do you want to try again (Yes or Not) : ').lower()
+    return decision
+
+
+parser = argparse.ArgumentParser('Olympic Athletes', )
 parser.add_argument('input_file', help='Enter the name of file which you want to use')
 parser.add_argument('-medals', nargs= 2, choices= ['2014', '1988', '1948', '1904', '1928', '1980', '1896', '1920', '1932', '2002', '2006', '1964', '1936', '1952', '1996', '1992', '1984', '1906', '2010', '1968', '2012', '1912', '1972', '1908', '1994', '2004', '1976', '2000', '1900', '1998', '2008', '1960', '1924', '1956', '2016',
 'NAM', 'JPN', 'PAR', 'POR', 'TUN', 'YEM', 'MKD', 'HON', 'FRG', 'YMD', 'BER', 'BAH', 'SAA', 'MAD', 'UGA', 'BEN', 'DJI', 'ESA', 'SVK', 'TTO', 'FRA', 'HUN', 'ROU', 'ANT', 'SEN', 'LTU', 'KOS', 'GUM', 'JOR', 'ARM', 'CYP', 'BIH', 'BDI', 'IRI', 'BOT', 'MOZ', 'ANG', 'USA', 'TAN', 'EST', 'BLR', 'GRE', 'BRA', 'CIV', 'MTN', 'ERI', 'MYA', 'NRU', 'SWZ', 'COK', 'SEY', 'PRK', 'UAR', 'CPV', 'NIG', 'BEL', 'CRO', 'NCA', 'KOR', 'KGZ', 'ISV', 'MLI', 'CRC', 'SAM', 'LCA', 'FSM', 'CGO', 'GBS', 'GHA', 'TKM', 'GRN', 'EGY', 'BOH', 'NBO', 'MAR', 'PAN', 'QAT', 'BIZ', 'LBA', 'MNE', 'CAN', 'URU', 'NZL', 'DMA', 'DOM', 'SCG', 'GUY', 'BOL', 'ANZ', 'BAR', 'MHL', 'BRU', 'ISR', 'GAB', 'THA', 'MAS', 'CHI', 'GER', 'TPE', 'WIF', 'SRB', 'MAW', 'KUW', 'GUI', 'LBR', 'ARG', 'IRL', 'KEN', 'VIN', 'POL', 'CAY', 'RUS', 'NFL', 'COM', 'YAR', 'GEO', 'AND', 'BUR', 'SOL', 'CRT', 'ALG', 'MON', 'IRQ', 'LIB', 'NEP', 'IVB', 'HKG', 'TUV', 'ROT', 'PAK', 'FIJ', 'SLO', 'JAM', 'UAE', 'VAN', 'VEN', 'TJK', 'LAO', 'ETH', 'SYR', 'UZB', 'PLW', 'MDA', 'IOA', 'TUR', 'ECU', 'MEX', 'INA', 'SGP', 'COL', 'KAZ', 'NED', 'GAM', 'CZE', 'TLS', 'KSA', 'CHN', 'NOR', 'CUB', 'GUA', 'COD', 'SUI', 'ESP', 'CAF', 'ZIM', 'URS', 'FIN', 'MRI', 'SUR', 'PNG', 'BAN', 'ASA', 'SRI', 'OMA', 'MLT', 'KIR', 'MDV', 'BRN', 'EUN', 'UNK', 'STP', 'SMR', 'YUG', 'VIE', 'NGR', 'AZE', 'ZAM', 'ARU', 'CAM', 'ALB', 'BUL', 'CHA', 'RWA', 'MGL', 'SOM', 'IND', 'GDR', 'RSA', 'GBR', 'HAI', 'TCH', 'LAT', 'LUX', 'PER', 'DEN', 'TOG', 'CMR', 'TGA', 'BHU', 'LES', 'ISL', 'SWE', 'PHI', 'AHO', 'PUR', 'LIE', 'AFG', 'RHO', 'UKR', 'VNM', 'AUT', 'MAL', 'PLE', 'GEQ', 'SSD', 'ITA', 'SLE', 'SUD', 'SKN', 'AUS',
@@ -79,10 +101,6 @@ MEDAL = header.index('Medal')
 LOCATION = header.index('City')
 SEASON = header.index('Season')
 
-place_dict = {'Gold' : 1,
-              'Silver' : 2,
-              'Bronze' : 3,
-}
 medals_dict = {'Gold' : 0,
               'Silver' : 0,
               'Bronze' : 0}
@@ -90,6 +108,10 @@ medals_dict = {'Gold' : 0,
 if arg.medals:
     user_team, user_year = arg.medals
     athletes_dict = {}
+    place_dict = {'Gold': 1,
+                  'Silver': 2,
+                  'Bronze': 3,
+                  }
     for line in file_lines:
         if line[YEAR] == user_year:
             if (line[TEAM] == user_team or lines[NOC] == user_team) and line[MEDAL] in medals_dict:
@@ -109,8 +131,9 @@ if arg.medals:
 
 
 elif arg.interactive:
-    while True:
-        user_country = input('Enter a country: ')
+    continue_or_not = 'yes'
+    while not continue_or_not == 'not':
+        user_country = user_country_validation(input('Enter a country: ').capitalize())
         the_first_year = 2024
         years_medal_dict = {}
         avr_amount_of_medals = 0
@@ -127,19 +150,10 @@ elif arg.interactive:
         for year in years_medal_list:
            avr_amount_of_medals += year[1]
         avr_amount_of_medals = int(avr_amount_of_medals / len(years_medal_list))
-        print(f'The most successful was {years_medal_list[0][0]}: {years_medal_list[0][1]} medals')
-        print(f'The worst year was {years_medal_list[-1][0]} : {years_medal_list[-1][1]} medals')
-        print(f'The average amount of medals in {user_country}: {avr_amount_of_medals} medals')
-        print(the_first_year_place_winter)
-        print(the_first_year_place_summer)
+        user_data = datas_task_4(years_medal_list, user_country, the_first_year, the_first_year_place_summer, the_first_year_place_winter, avr_amount_of_medals)
+        show_data(user_data)
+        continue_or_not = continue_validation(input('Do you want to try again (Yes or Not): ').lower())
 
 if arg.output:
     user_output_file = arg.output[0]
     output(user_data, user_output_file)
-
-# year and location winter & summer, medals
-# програма має виводити статистику цієї країни - перша участь у олімпіаді (рік та місце проведення),
-# найуспішніша олімпіада (за кількістю медалей, вивести це значення), найневдаліша, та середня кількість
-# медалей кожного типу на кожній олімпіаді
-
-
