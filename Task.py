@@ -53,6 +53,7 @@ def location_searcher(input_file_list, year, SEASON, LOCATION, YEAR):
     if len(year_place_winter) == 0:
         year_place_winter = f'this country does not participated in winter games in {year}'
     return year_place_summer, year_place_winter
+
 def year_validation(year : str):
     if year.isdigit():
         return year
@@ -121,6 +122,35 @@ def delete_text(file):
         delete_text_file.write('')
     return file
 
+def additional_task(file_in_lines, argument_list : list):
+    user_age =[]
+    user_sex = []
+    data = []
+    sex_list = ['F', 'M']
+
+    top_dict = {'1':{},
+                '2':{},
+                '3': {},
+                '4':{}}
+    for args in argument_list:
+        if args in top_dict:
+            user_age.append(args)
+        elif args in sex_list:
+            user_sex.append(args)
+    for age, sex in zip(user_age, user_sex):
+        for row in file_in_lines:
+            if row[AGE].isdigit():
+                if row[SEX] == sex and age_dict[int(age)] <= int(row[AGE]) < age_dict[int(age)+1] and row[MEDAL] in medals_dict:
+                    if row[NAME] in top_dict[age]:
+                        top_dict[age][row[NAME]] +=1
+                    else:
+                        top_dict[age][row[NAME]] = 1
+        top_dict[age] = dict(sorted(top_dict[age].items(), key=lambda x: x[1], reverse=True))
+        data.append(f'The top athlet in  {sex} sex and in {age_dict[int(age)]} - {age_dict[int(age) + 1]} age is {list(top_dict[age])[0]} - {top_dict[age][list(top_dict[age])[0]]} medals')
+    return data
+
+
+
 parser = argparse.ArgumentParser('Olympic Athletes', )
 parser.add_argument('input_file', help='Enter the name of file which you want to use')
 parser.add_argument('-medals', nargs= 2, choices= ['2014', '1988', '1948', '1904', '1928', '1980', '1896', '1920', '1932', '2002', '2006', '1964', '1936', '1952', '1996', '1992', '1984', '1906', '2010', '1968', '2012', '1912', '1972', '1908', '1994', '2004', '1976', '2000', '1900', '1998', '2008', '1960', '1924', '1956', '2016',
@@ -129,6 +159,7 @@ parser.add_argument('-medals', nargs= 2, choices= ['2014', '1988', '1948', '1904
 help="Enter a country or a team which medals you want to see and the year of this Olympic game")
 parser.add_argument('-output', nargs= 1, help='Input the output file')
 parser.add_argument('-interactive', help='If you want to work with input', action='store_true')
+parser.add_argument('--top', nargs='*', choices=['F', 'M', '1', '2', '3', '4'], help='Show you the top in the sex you will choose and age category:\n1: 18-25\n2: 26-35\n3: 36-49\n4: 50+' )
 
 arg = parser.parse_args()
 
@@ -158,6 +189,8 @@ YEAR = header.index('Year')
 MEDAL = header.index('Medal')
 LOCATION = header.index('City')
 SEASON = header.index('Season')
+SEX = header.index('Sex')
+AGE = header.index('Age')
 
 medals_dict = {'Gold' : 0,
               'Silver' : 0,
@@ -199,6 +232,17 @@ elif arg.interactive:
         show_data(user_data)
         continue_or_not = continue_validation(input('Do you want to try again (Yes or Not): ').lower())
     user_data = file_data('task_4.txt')
+
+elif arg.top:
+    arguments = arg.top
+    age_dict = {1: 18,
+                2: 25,
+                3: 35,
+                4: 50,
+                5: 1000}
+    user_data = additional_task(file_lines, arguments)
+    show_data(user_data)
+
 
 if arg.output:
     user_output_file = arg.output[0]
