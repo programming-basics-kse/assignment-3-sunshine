@@ -212,6 +212,8 @@ delete_text('task_4.txt')
 
 
 #2 task
+import argparse
+
 def total_medals(data, year):
     country_medals = {}
     for athlete in data:
@@ -227,8 +229,6 @@ def total_medals(data, year):
         results.append(f"{team}: Gold: {medals['Gold']}, Silver: {medals['Silver']}, Bronze: {medals['Bronze']}")
     return results
 
-
-#3 task
 def overall_best_year(data, countries):
     country_yearly_medals = {country: {} for country in countries}
 
@@ -248,6 +248,38 @@ def overall_best_year(data, countries):
         else:
             results.append(f"{country}: No medals won.")
     return results
+
+def main():
+    parser = argparse.ArgumentParser(description="Analyze Olympic medal data.")
+    parser.add_argument("action", choices=["total_medals", "overall_best_year"],
+                        help="Action to perform: total_medals or overall_best_year")
+    parser.add_argument("--year", type=int, help="Year to analyze (for total_medals)")
+    parser.add_argument("--countries", nargs="+", help="List of countries to analyze (for overall_best_year)")
+    parser.add_argument("--data_file", type=str, required=True, help="Path to the data file in JSON format")
+
+    args = parser.parse_args()
+
+    # Load data from the provided file
+    import json
+    with open(args.data_file, "r") as f:
+        data = json.load(f)
+
+    # Perform the action based on the user's choice
+    if args.action == "total_medals":
+        if not args.year:
+            parser.error("The --year argument is required for total_medals.")
+        result = total_medals(data, args.year)
+        for line in result:
+            print(line)
+    elif args.action == "overall_best_year":
+        if not args.countries:
+            parser.error("The --countries argument is required for overall_best_year.")
+        result = overall_best_year(data, args.countries)
+        for line in result:
+            print(line)
+
+if __name__ == "__main__":
+    main()
 
 
 
