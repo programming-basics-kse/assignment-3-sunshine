@@ -1,6 +1,18 @@
 import argparse
 import csv
 
+
+def athletes_searcher (input_file, year_index, year_from_user, team_index, team_from_user, noc_index, medal_index, ):
+    medal_list = ['Gold', 'Silver', 'Bronze']
+    athletes_dictionary = {}
+    for line in input_file:
+        if line[year_index] == year_from_user:
+            if (line[team_index] == team_from_user or lines[noc_index] == team_from_user) and line[medal_index] in medal_list:
+                athletes_dictionary[line[NAME]] = {'discipline' : line[EVENT],
+                                            'medal' : line[MEDAL],
+                                             'place' : place_dict[line[MEDAL]]}
+    return athletes_dictionary
+
 def datas (athletes_dictionary, medals_dictionary, team, year):
     data = []
     if len(athletes_dictionary) < 10:
@@ -12,29 +24,18 @@ def datas (athletes_dictionary, medals_dictionary, team, year):
     data.append(f'\nThe total amount of the medals of the {team} team in {year}:\nGold: {medals_dictionary['Gold']}\nSilver: {medals_dictionary['Silver']}\nBronze: {medals_dictionary['Bronze']}')
     return data
 
-def datas_task_4(output_medals_list, user_country, year_1, summer_1, winter_1, avr):
-    data = []
-    data.append(f'The first year when {user_country} participated in Olympic year was {year_1}\nSummer location in {year_1}: {summer_1}\nWinter location in {year_1}: {winter_1}')
-    data.append(f'The most successful was {output_medals_list[0][0]}: {output_medals_list[0][1]} medals\nThe worst year was {output_medals_list[-1][0]} : {output_medals_list[-1][1]} medals')
-    data.append(f'The average amount of medals in {user_country}: {avr} medals')
-    return data
-
-def output(data, output_file):
-    with open(output_file, 'w') as file:
-        for chars in data:
-            file.write(chars)
-            file.write('\n')
-    return output_file
-
-def show_data (data):
-    for char in data:
-        print(char)
-
-def year_validation(year : str):
-    if year.isdigit():
-        return year
-    else:
-        return 0
+def the_first_year_and_medals_dict(input_list,team, noc, u_country, file_year, medal):
+    the_first_year = 2024
+    years_medal_dict = {}
+    for row in input_list:
+        if row[team] == u_country or row[noc] == u_country:
+            if int(year_validation(row[file_year])) < the_first_year:
+                the_first_year = int(row[file_year])
+            if row[file_year] in years_medal_dict and row[medal] in medals_dict:
+                years_medal_dict[row[file_year]] += 1
+            elif row[medal] in medals_dict:
+                years_medal_dict[row[file_year]] = 1
+    return the_first_year, years_medal_dict
 
 def location_searcher(input_file_list, year, SEASON, LOCATION, YEAR):
     year_place_winter = []
@@ -52,18 +53,73 @@ def location_searcher(input_file_list, year, SEASON, LOCATION, YEAR):
     if len(year_place_winter) == 0:
         year_place_winter = f'this country does not participated in winter games in {year}'
     return year_place_summer, year_place_winter
+def year_validation(year : str):
+    if year.isdigit():
+        return year
+    else:
+        return 0
 
 def user_country_validation(user_county):
+    if len(user_county) == 3:
+        user_county = user_county.upper()
+    else:
+        user_county = user_county.capitalize()
     country_list = ['NAM', 'JPN', 'PAR', 'POR', 'TUN', 'YEM', 'MKD', 'HON', 'FRG', 'YMD', 'BER', 'BAH', 'SAA', 'MAD', 'UGA', 'BEN', 'DJI', 'ESA', 'SVK', 'TTO', 'FRA', 'HUN', 'ROU', 'ANT', 'SEN', 'LTU', 'KOS', 'GUM', 'JOR', 'ARM', 'CYP', 'BIH', 'BDI', 'IRI', 'BOT', 'MOZ', 'ANG', 'USA', 'TAN', 'EST', 'BLR', 'GRE', 'BRA', 'CIV', 'MTN', 'ERI', 'MYA', 'NRU', 'SWZ', 'COK', 'SEY', 'PRK', 'UAR', 'CPV', 'NIG', 'BEL', 'CRO', 'NCA', 'KOR', 'KGZ', 'ISV', 'MLI', 'CRC', 'SAM', 'LCA', 'FSM', 'CGO', 'GBS', 'GHA', 'TKM', 'GRN', 'EGY', 'BOH', 'NBO', 'MAR', 'PAN', 'QAT', 'BIZ', 'LBA', 'MNE', 'CAN', 'URU', 'NZL', 'DMA', 'DOM', 'SCG', 'GUY', 'BOL', 'ANZ', 'BAR', 'MHL', 'BRU', 'ISR', 'GAB', 'THA', 'MAS', 'CHI', 'GER', 'TPE', 'WIF', 'SRB', 'MAW', 'KUW', 'GUI', 'LBR', 'ARG', 'IRL', 'KEN', 'VIN', 'POL', 'CAY', 'RUS', 'NFL', 'COM', 'YAR', 'GEO', 'AND', 'BUR', 'SOL', 'CRT', 'ALG', 'MON', 'IRQ', 'LIB', 'NEP', 'IVB', 'HKG', 'TUV', 'ROT', 'PAK', 'FIJ', 'SLO', 'JAM', 'UAE', 'VAN', 'VEN', 'TJK', 'LAO', 'ETH', 'SYR', 'UZB', 'PLW', 'MDA', 'IOA', 'TUR', 'ECU', 'MEX', 'INA', 'SGP', 'COL', 'KAZ', 'NED', 'GAM', 'CZE', 'TLS', 'KSA', 'CHN', 'NOR', 'CUB', 'GUA', 'COD', 'SUI', 'ESP', 'CAF', 'ZIM', 'URS', 'FIN', 'MRI', 'SUR', 'PNG', 'BAN', 'ASA', 'SRI', 'OMA', 'MLT', 'KIR', 'MDV', 'BRN', 'EUN', 'UNK', 'STP', 'SMR', 'YUG', 'VIE', 'NGR', 'AZE', 'ZAM', 'ARU', 'CAM', 'ALB', 'BUL', 'CHA', 'RWA', 'MGL', 'SOM', 'IND', 'GDR', 'RSA', 'GBR', 'HAI', 'TCH', 'LAT', 'LUX', 'PER', 'DEN', 'TOG', 'CMR', 'TGA', 'BHU', 'LES', 'ISL', 'SWE', 'PHI', 'AHO', 'PUR', 'LIE', 'AFG', 'RHO', 'UKR', 'VNM', 'AUT', 'MAL', 'PLE', 'GEQ', 'SSD', 'ITA', 'SLE', 'SUD', 'SKN', 'AUS',
 'France', 'Great Britain', 'Denmark', 'Cambodia', 'Lesotho', 'Oman', 'Israel', 'Cameroon', 'Morocco', 'Lebanon', 'Maldives', 'Dominican Republic', 'Zimbabwe', 'Mali', 'United Arab Emirates', 'Soviet Union', 'Turkey', 'Andorra', 'Costa Rica', 'Aruba', 'South Sudan', 'Bhutan', 'Russia', 'Greece', 'Kyrgyzstan', 'Chad', 'Japan', 'Italy', 'Venezuela', 'Moldova', 'Sri Lanka', 'Mauritius', 'Luxembourg', 'Seychelles', 'Belarus', 'China', 'Austria', 'Sierra Leone', 'Benin', 'Zambia', 'Estonia', 'Singapore', 'Brunei', 'Guatemala', 'Finland', 'Gambia', 'Liberia', 'Jamaica', 'Thailand', 'Monaco', 'Belize', 'Malawi', 'Bangladesh', 'Kiribati', 'Sao Tome and Principe', 'India', 'Uzbekistan', 'Czech Republic', 'Mongolia', 'Kosovo', 'Somalia', 'Albania', 'Sudan', 'United States', 'Turkmenistan', 'Madagascar', 'El Salvador', 'Egypt', 'Comoros', 'Palestine', 'Saudi Arabia', 'Malta', 'Angola', 'Spain', 'Saint Kitts and Nevis', 'Uruguay', 'Mauritania', 'Belgium', 'Germany', 'Czechoslovakia', 'Togo', 'Norway', 'Poland', 'Argentina', 'Saint Lucia', 'New Zealand', 'Grenada', 'Chile', 'Samoa', 'Trinidad and Tobago', 'Netherlands', 'Latvia', 'Peru', 'East Germany', 'Bosnia and Herzegovina', 'Namibia', 'Iceland', 'Cayman Islands', 'Laos', 'Syria', 'Tunisia', 'Switzerland', 'Mozambique', 'Armenia', 'Tajikistan', 'Suriname', 'Hungary', 'Botswana', 'Iraq', 'San Marino', 'Djibouti', 'Solomon Islands', 'Portugal', 'Senegal', 'Nigeria', 'Slovenia', 'Cyprus', 'Malaysia', 'Guinea', 'Brazil', 'Guam', 'Ghana', 'Vietnam', 'Paraguay', 'North Korea', 'Dominica', 'Vanuatu', 'Indonesia', 'Liechtenstein', 'Tuvalu', 'Algeria', 'Ecuador', 'South Korea', 'Bahamas', 'Kuwait', 'Slovakia', 'Tonga', 'Uganda', 'Kenya', 'Pakistan', 'Iran', 'Nicaragua', 'Nauru', 'Libya', 'Papua New Guinea', 'Georgia', 'Antigua and Barbuda', 'Yugoslavia', 'Bolivia', 'Guyana', 'Eritrea', 'Azerbaijan', 'Unified Team', 'Palau', 'Lithuania', 'Myanmar', 'Qatar', 'Bulgaria', 'Tanzania', 'Fiji', 'Burundi', 'Sweden', 'Barbados', 'Puerto Rico', 'Marshall Islands', 'Montenegro', 'Ethiopia', 'Cape Verde', 'Croatia', 'Ireland', 'Yemen', 'Central African Republic', 'Cuba', 'Burkina Faso', 'Ukraine', 'South Africa', 'Bahrain', 'Kazakhstan', 'Rwanda', 'Romania', 'Equatorial Guinea', 'Mexico', 'Canada', 'Colombia', 'Hong Kong', 'Afghanistan', 'Honduras', 'Australia', 'Panama', 'Serbia', 'Niger', 'Jordan', 'Philippines', 'Haiti', 'Saint Vincent and the Grenadines', 'Nepal', 'Gabon']
     while not user_county in country_list:
-        user_county = input('Enter a country: ').capitalize()
+        user_county = input('Enter a country: ')
+        if len(user_county) == 3:
+            user_county = user_county.upper()
+        else:
+            user_county = user_county.capitalize()
     return user_county
 
 def continue_validation(decision):
-    while not decision == 'yes' and decision == 'not':
+    while not decision == 'yes' and not decision == 'not':
         decision = input('Do you want to try again (Yes or Not) : ').lower()
     return decision
+
+def datas_task_4(output_medals_list, user_country, year_1, summer_1, winter_1, avr):
+    data = []
+    data.append(f'The first year when {user_country} participated in Olympic year was {year_1}\nSummer location in {year_1}: {summer_1}\nWinter location in {year_1}: {winter_1}')
+    data.append(f'The most successful was {output_medals_list[0][0]}: {output_medals_list[0][1]} medals\nThe worst year was {output_medals_list[-1][0]} : {output_medals_list[-1][1]} medals')
+    data.append(f'The average amount of medals in {user_country}: {avr} medals')
+    return data
+
+def show_data (data):
+    for char in data:
+        print(char)
+
+def file_data (file):
+    import csv
+    data = []
+    with open(file, 'r') as data_file:
+        csv_file = csv.reader(data_file)
+        for row in csv_file:
+            for char in row:
+                data.append(char)
+    return data
+
+def output(data, output_file):
+    with open(output_file, 'w') as file:
+        for chars in data:
+            file.write(chars)
+            file.write('\n')
+        file.write('\n')
+    return output_file
+
+def output_append (data, output_file):
+    with open(output_file, 'a') as file:
+        for chars in data:
+            file.write(chars)
+            file.write('\n')
+        file.write("\n")
+    return output_file
+
+def delete_text(file):
+    with open(file, 'w') as delete_text_file:
+        delete_text_file.write('')
+    return file
 
 
 parser = argparse.ArgumentParser('Olympic Athletes', )
@@ -107,18 +163,11 @@ medals_dict = {'Gold' : 0,
 
 if arg.medals:
     user_team, user_year = arg.medals
-    athletes_dict = {}
     place_dict = {'Gold': 1,
                   'Silver': 2,
                   'Bronze': 3,
                   }
-    for line in file_lines:
-        if line[YEAR] == user_year:
-            if (line[TEAM] == user_team or lines[NOC] == user_team) and line[MEDAL] in medals_dict:
-                athletes_dict[line[NAME]] = {'discipline' : line[EVENT],
-                                            'medal' : line[MEDAL],
-                                             'place' : place_dict[line[MEDAL]]}
-
+    athletes_dict = athletes_searcher(file_lines, YEAR, user_year, TEAM, user_team, NOC, MEDAL)
     athletes_dict = dict(sorted(athletes_dict.items(), key=lambda x: x[1]['place']))
     for athletes in athletes_dict:
         if athletes_dict[athletes]['medal'] in medals_dict:
@@ -133,27 +182,26 @@ if arg.medals:
 elif arg.interactive:
     continue_or_not = 'yes'
     while not continue_or_not == 'not':
-        user_country = user_country_validation(input('Enter a country: ').capitalize())
-        the_first_year = 2024
-        years_medal_dict = {}
+        user_country = user_country_validation(input('Enter a country: '))
         avr_amount_of_medals = 0
-        for row in file_lines:
-            if row[TEAM] == user_country or row[NOC] == user_country:
-                if int(year_validation(row[YEAR])) < the_first_year:
-                    the_first_year = int(row[YEAR])
-                if row[YEAR] in years_medal_dict and row[MEDAL] in medals_dict:
-                    years_medal_dict[row[YEAR]] += 1
-                elif row[MEDAL] in medals_dict:
-                    years_medal_dict[row[YEAR]] = 1
+        the_first_year, years_medal_dict = the_first_year_and_medals_dict(file_lines, TEAM, NOC, user_country, YEAR, MEDAL)
         the_first_year_place_summer, the_first_year_place_winter = location_searcher(file_lines, str(the_first_year), SEASON, LOCATION, YEAR)
         years_medal_list = list(sorted(years_medal_dict.items(), key=lambda x: x[1], reverse=True))
         for year in years_medal_list:
            avr_amount_of_medals += year[1]
         avr_amount_of_medals = int(avr_amount_of_medals / len(years_medal_list))
         user_data = datas_task_4(years_medal_list, user_country, the_first_year, the_first_year_place_summer, the_first_year_place_winter, avr_amount_of_medals)
+        output_append(user_data, 'task_4.txt')
         show_data(user_data)
         continue_or_not = continue_validation(input('Do you want to try again (Yes or Not): ').lower())
+    user_data = file_data('task_4.txt')
 
 if arg.output:
     user_output_file = arg.output[0]
-    output(user_data, user_output_file)
+    delete_text(user_output_file)
+    try:
+        output(user_data, user_output_file)
+    except Exception:
+        print('Something went wrong')
+delete_text('task_4.txt')
+
