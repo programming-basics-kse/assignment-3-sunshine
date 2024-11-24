@@ -303,12 +303,10 @@ def main():
 
     args = parser.parse_args()
 
-    # Load data from the provided file
     import json
     with open(args.data_file, "r") as f:
         data = json.load(f)
 
-    # Perform the action based on the user's choice
     if args.action == "total_medals":
         if not args.year:
             parser.error("The --year argument is required for total_medals.")
