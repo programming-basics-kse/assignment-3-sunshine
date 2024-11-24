@@ -132,7 +132,7 @@ parser.add_argument('-interactive', help='If you want to work with input', actio
 
 arg = parser.parse_args()
 
-user_file = arg.input_file
+user_file = arg.input_file#
 
 
 
