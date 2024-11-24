@@ -93,3 +93,47 @@ if arg.medals:
 if arg.output:
     user_output_file = arg.output[0]
     output(user_data, user_output_file)
+
+
+#2 task
+def total_medals(data, year):
+    country_medals = {}
+    for athlete in data:
+        if athlete['Year'] == year and athlete['Medal']:
+            team = athlete['Team']
+            medal = athlete['Medal']
+            if team not in country_medals:
+                country_medals[team] = {'Gold': 0, 'Silver': 0, 'Bronze': 0}
+            country_medals[team][medal] += 1
+
+    results = []
+    for team, medals in sorted(country_medals.items()):
+        results.append(f"{team}: Gold: {medals['Gold']}, Silver: {medals['Silver']}, Bronze: {medals['Bronze']}")
+    return results
+
+
+#3 task
+def overall_best_year(data, countries):
+    country_yearly_medals = {country: {} for country in countries}
+
+    for athlete in data:
+        team = athlete['Team']
+        year = athlete['Year']
+        if team in countries and athlete['Medal']:
+            if year not in country_yearly_medals[team]:
+                country_yearly_medals[team][year] = 0
+            country_yearly_medals[team][year] += 1
+
+    results = []
+    for country, yearly_medals in country_yearly_medals.items():
+        if yearly_medals:
+            best_year = max(yearly_medals, key=yearly_medals.get)
+            results.append(f"{country}: Best Year: {best_year}, Medals: {yearly_medals[best_year]}")
+        else:
+            results.append(f"{country}: No medals won.")
+    return results
+
+
+
+
+
