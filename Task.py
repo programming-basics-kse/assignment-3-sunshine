@@ -261,6 +261,36 @@ if arg.output:
 delete_text('task_4.txt')
 
 
+# task2
+def athletes_searcher(input_file, year_index, year_from_user, team_index, team_from_user, noc_index, medal_index):
+    medal_list = ['Gold', 'Silver', 'Bronze']
+    athletes_dictionary = {}
+    for line in input_file:
+        if line[year_index] == year_from_user:
+            if (line[team_index] == team_from_user or line[noc_index] == team_from_user) and line[
+                medal_index] in medal_list:
+                athletes_dictionary[line['NAME']] = {'discipline': line['EVENT'],
+                                                     'medal': line['MEDAL'],
+                                                     'place': place_dict[line['MEDAL']]}
+    return athletes_dictionary
+
+
+def the_first_year_and_medals_dict(input_list, team, noc, u_country, file_year, medal):
+    the_first_year = 2024
+    years_medal_dict = {}
+    for row in input_list:
+        if row[team] == u_country or row[noc] == u_country:
+            if int(year_validation(row[file_year])) < the_first_year:
+                the_first_year = int(row[file_year])
+            if row[file_year] in years_medal_dict and row[medal] in medals_dict:
+                years_medal_dict[row[file_year]] += 1
+            elif row[medal] in medals_dict:
+                years_medal_dict[row[file_year]] = 1
+    return the_first_year, years_medal_dict
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Olympic Data Processing")
 
 #2 task
 import argparse
@@ -327,8 +357,15 @@ def overall_best_year(data, countries):
 #         for line in result:
 #             print(line)
 
-# if __name__ == "__main__":
-#     main()
+
+    file_year = 'YEAR'
+    medal = 'MEDAL'
+    first_year, medals_dict = the_first_year_and_medals_dict(data, 'TEAM', 'NOC', args.u_country, file_year, medal)
+
+    print(f"First year of participation: {first_year}")
+    print(f"Medals by year: {medals_dict}")
+
+
 
 
 
