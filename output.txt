@@ -1,2 +1,265 @@
-The top athlet in  F sex and in 18 - 25 age is Margit Korondi (Kronstein-, -Plachy, -Szalay) - 8 medals
+United States : Gold - 115
+	Silver - 75
+	Bronze - 69
+Russia : Gold - 48
+	Silver - 46
+	Bronze - 95
+Sweden : Gold - 5
+	Silver - 5
+	Bronze - 2
+France : Gold - 21
+	Silver - 10
+	Bronze - 22
+Italy : Gold - 24
+	Silver - 41
+	Bronze - 39
+Germany : Gold - 41
+	Silver - 43
+	Bronze - 63
+Argentina : Gold - 28
+	Silver - 0
+	Bronze - 21
+Japan : Gold - 21
+	Silver - 20
+	Bronze - 52
+Great Britain : Gold - 17
+	Silver - 23
+	Bronze - 15
+Syria : Gold - 0
+	Silver - 0
+	Bronze - 1
+United Arab Emirates : Gold - 1
+	Silver - 0
+	Bronze - 0
+Lithuania : Gold - 1
+	Silver - 2
+	Bronze - 0
+Brazil : Gold - 16
+	Silver - 17
+	Bronze - 3
+Nigeria : Gold - 0
+	Silver - 0
+	Bronze - 8
+Austria : Gold - 3
+	Silver - 4
+	Bronze - 1
+Australia : Gold - 49
+	Silver - 77
+	Bronze - 31
+Egypt : Gold - 1
+	Silver - 1
+	Bronze - 3
+Croatia : Gold - 15
+	Silver - 3
+	Bronze - 3
+Denmark : Gold - 19
+	Silver - 1
+	Bronze - 7
+Turkey : Gold - 3
+	Silver - 3
+	Bronze - 5
+Cuba : Gold - 32
+	Silver - 8
+	Bronze - 22
+Belarus : Gold - 2
+	Silver - 5
+	Bronze - 8
+Kazakhstan : Gold - 1
+	Silver - 4
+	Bronze - 3
+Georgia : Gold - 2
+	Silver - 2
+	Bronze - 0
+Greece : Gold - 8
+	Silver - 18
+	Bronze - 5
+Azerbaijan : Gold - 1
+	Silver - 0
+	Bronze - 4
+Spain : Gold - 4
+	Silver - 15
+	Bronze - 9
+Czech Republic : Gold - 1
+	Silver - 6
+	Bronze - 4
+Slovakia : Gold - 3
+	Silver - 2
+	Bronze - 5
+Canada : Gold - 3
+	Silver - 10
+	Bronze - 4
+Jamaica : Gold - 6
+	Silver - 1
+	Bronze - 6
+Ukraine : Gold - 8
+	Silver - 8
+	Bronze - 31
+Romania : Gold - 23
+	Silver - 5
+	Bronze - 11
+Paraguay : Gold - 0
+	Silver - 17
+	Bronze - 0
+Netherlands : Gold - 4
+	Silver - 51
+	Bronze - 22
+Germany-1 : Gold - 0
+	Silver - 2
+	Bronze - 0
+Brazil-1 : Gold - 2
+	Silver - 2
+	Bronze - 0
+Ethiopia : Gold - 2
+	Silver - 3
+	Bronze - 2
+Hungary : Gold - 24
+	Silver - 12
+	Bronze - 4
+Morocco : Gold - 2
+	Silver - 1
+	Bronze - 0
+Thailand : Gold - 3
+	Silver - 1
+	Bronze - 4
+Trinidad and Tobago : Gold - 0
+	Silver - 0
+	Bronze - 1
+Colombia : Gold - 0
+	Silver - 0
+	Bronze - 2
+Venezuela : Gold - 0
+	Silver - 0
+	Bronze - 2
+New Zealand : Gold - 4
+	Silver - 2
+	Bronze - 0
+South Africa : Gold - 4
+	Silver - 3
+	Bronze - 3
+Slovenia : Gold - 0
+	Silver - 2
+	Bronze - 3
+China : Gold - 42
+	Silver - 27
+	Bronze - 13
+Chinese Taipei : Gold - 2
+	Silver - 4
+	Bronze - 3
+China-1 : Gold - 8
+	Silver - 0
+	Bronze - 0
+South Korea : Gold - 12
+	Silver - 26
+	Bronze - 8
+Bulgaria : Gold - 2
+	Silver - 1
+	Bronze - 14
+Serbia and Montenegro : Gold - 0
+	Silver - 13
+	Bronze - 0
+Zimbabwe : Gold - 1
+	Silver - 1
+	Bronze - 1
+Norway : Gold - 5
+	Silver - 0
+	Bronze - 2
+Uzbekistan : Gold - 2
+	Silver - 1
+	Bronze - 2
+Great Britain-1 : Gold - 0
+	Silver - 2
+	Bronze - 0
+Indonesia-1 : Gold - 0
+	Silver - 0
+	Bronze - 2
+Denmark-2 : Gold - 0
+	Silver - 0
+	Bronze - 2
+Bahamas : Gold - 1
+	Silver - 0
+	Bronze - 1
+Switzerland : Gold - 1
+	Silver - 2
+	Bronze - 2
+Israel : Gold - 1
+	Silver - 0
+	Bronze - 1
+China-2 : Gold - 2
+	Silver - 0
+	Bronze - 2
+Chile : Gold - 3
+	Silver - 0
+	Bronze - 1
+Poland : Gold - 4
+	Silver - 2
+	Bronze - 6
+Mexico : Gold - 0
+	Silver - 3
+	Bronze - 1
+South Korea-2 : Gold - 2
+	Silver - 0
+	Bronze - 0
+Iran : Gold - 2
+	Silver - 2
+	Bronze - 2
+Belgium : Gold - 1
+	Silver - 0
+	Bronze - 2
+Switzerland-2 : Gold - 0
+	Silver - 0
+	Bronze - 2
+Indonesia : Gold - 1
+	Silver - 1
+	Bronze - 1
+Estonia : Gold - 0
+	Silver - 1
+	Bronze - 2
+Kenya : Gold - 1
+	Silver - 4
+	Bronze - 2
+Finland : Gold - 0
+	Silver - 2
+	Bronze - 0
+Mongolia : Gold - 0
+	Silver - 0
+	Bronze - 1
+North Korea : Gold - 0
+	Silver - 4
+	Bronze - 1
+Hong Kong-2 : Gold - 0
+	Silver - 2
+	Bronze - 0
+South Korea-1 : Gold - 0
+	Silver - 2
+	Bronze - 2
+Spain-2 : Gold - 0
+	Silver - 2
+	Bronze - 0
+United States-1 : Gold - 2
+	Silver - 0
+	Bronze - 0
+Cameroon : Gold - 1
+	Silver - 0
+	Bronze - 0
+United States-2 : Gold - 0
+	Silver - 0
+	Bronze - 2
+Portugal : Gold - 0
+	Silver - 2
+	Bronze - 1
+India : Gold - 0
+	Silver - 1
+	Bronze - 0
+Latvia : Gold - 0
+	Silver - 4
+	Bronze - 0
+Dominican Republic : Gold - 1
+	Silver - 0
+	Bronze - 0
+Czech Republic-1 : Gold - 0
+	Silver - 0
+	Bronze - 2
+Eritrea : Gold - 0
+	Silver - 0
+	Bronze - 1
 

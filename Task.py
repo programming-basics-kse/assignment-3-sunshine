@@ -149,7 +149,44 @@ def additional_task(file_in_lines, argument_list : list):
         data.append(f'The top athlet in  {sex} sex and in {age_dict[int(age)]} - {age_dict[int(age) + 1]} age is {list(top_dict[age])[0]} - {top_dict[age][list(top_dict[age])[0]]} medals')
     return data
 
+def total(user_year, input_file):
+    data = {}
+    for rows in input_file:
+        if rows[YEAR] == user_year[0]:
+            if rows[TEAM] in data and rows[MEDAL] in medals_dict and rows[MEDAL] in data[rows[TEAM]]:
+                data[rows[TEAM]][rows[MEDAL]] += 1
+            elif rows[TEAM] not in data and rows[MEDAL] in medals_dict:
+                data[rows[TEAM]] = {'Gold' : 0,
+                                    'Silver' : 0,
+                                    'Bronze' : 0}
+                data[rows[TEAM]][rows[MEDAL]] += 1
+    return data
 
+def overall_best_year(data, countries):
+    country_yearly_medals = {country: {} for country in countries}
+
+    for athlete in data:
+        team = athlete['Team']
+        year = athlete['Year']
+        if team in countries and athlete['Medal']:
+            if year not in country_yearly_medals[team]:
+                country_yearly_medals[team][year] = 0
+            country_yearly_medals[team][year] += 1
+
+    results = []
+    for country, yearly_medals in country_yearly_medals.items():
+        if yearly_medals:
+            best_year = max(yearly_medals, key=yearly_medals.get)
+            results.append(f"{country}: Best Year: {best_year}, Medals: {yearly_medals[best_year]}")
+        else:
+            results.append(f"{country}: No medals won.")
+    return results
+
+def datas_task_2 (country_dict : dict):
+    data = []
+    for country in country_dict:
+        data.append(f'{country} : Gold - {country_dict[country]['Gold']}\n\tSilver - {country_dict[country]['Silver']}\n\tBronze - {country_dict[country]['Bronze']}')
+    return data
 
 parser = argparse.ArgumentParser('Olympic Athletes', )
 parser.add_argument('input_file', help='Enter the name of file which you want to use')
@@ -160,7 +197,7 @@ help="Enter a country or a team which medals you want to see and the year of thi
 parser.add_argument('-output', nargs= 1, help='Input the output file')
 parser.add_argument('-interactive', help='If you want to work with input', action='store_true')
 parser.add_argument('--top', nargs='*', choices=['F', 'M', '1', '2', '3', '4'], help='Show you the top in the sex you will choose and age category:\n1: 18-25\n2: 26-35\n3: 36-49\n4: 50+' )
-parser.add_argument('-total', nargs=1, choices=['2014', '1988', '1948', '1904', '1928', '1980', '1896', '1920', '1932', '2002', '2006', '1964', '1936', '1952', '1996', '1992', '1984', '1906', '2010', '1968', '2012', '1912', '1972', '1908', '1994', '2004', '1976', '2000', '1900', '1998', '2008', '1960', '1924', '1956', '2016'], help=)
+parser.add_argument('-total', nargs=1, choices=['2014', '1988', '1948', '1904', '1928', '1980', '1896', '1920', '1932', '2002', '2006', '1964', '1936', '1952', '1996', '1992', '1984', '1906', '2010', '1968', '2012', '1912', '1972', '1908', '1994', '2004', '1976', '2000', '1900', '1998', '2008', '1960', '1924', '1956', '2016'])
 parser.add_argument('-overall', nargs='*', choices=['Dominican Republic', 'Honduras', 'Chad', 'Cambodia', 'Iraq', 'Liberia', 'Yemen', 'Netherlands', 'Bahamas', 'Botswana', 'Burundi', 'Jamaica', 'Tunisia', 'Thailand', 'Comoros', 'Dominica', 'Hong Kong', 'Singapore', 'Antigua and Barbuda', 'Malta', 'Canada', 'Pakistan', 'Japan', 'Saint Kitts and Nevis', 'Belgium', 'Kazakhstan', 'Iceland', 'Tonga', 'Hungary', 'Solomon Islands', 'Austria', 'Lesotho', 'Papua New Guinea', 'Philippines', 'Azerbaijan', 'Maldives', 'Australia', 'Israel', 'Russia', 'Bosnia and Herzegovina', 'Qatar', 'Albania', 'Gambia', 'Bahrain', 'Palau', 'Mauritius', 'Belize', 'Grenada', 'Kiribati', 'Switzerland', 'Iran', 'Brunei', 'Jordan', 'Ecuador', 'Guam', 'Uruguay', 'Trinidad and Tobago', 'Tuvalu', 'Palestine', 'South Africa', 'Lebanon', 'Mauritania', 'Angola', 'Slovakia', 'Chile', 'Libya', 'Cuba', 'Equatorial Guinea', 'Bhutan', 'Armenia', 'Oman', 'Slovenia', 'Cyprus', 'Montenegro', 'Sao Tome and Principe', 'Aruba', 'Norway', 'Latvia', 'Croatia', 'Myanmar', 'Moldova', 'Unified Team', 'Monaco', 'Puerto Rico', 'Luxembourg', 'Guinea', 'Kyrgyzstan', 'Haiti', 'North Korea', 'United Arab Emirates', 'Denmark', 'Serbia', 'Uganda', 'Vanuatu', 'Czechoslovakia', 'Laos', 'Soviet Union', 'New Zealand', 'Paraguay', 'Rwanda', 'Mali', 'Senegal', 'Malaysia', 'Cape Verde', 'Nepal', 'Estonia', 'Syria', 'Georgia', 'Mexico', 'Italy', 'Guatemala', 'Fiji', 'Brazil', 'Guyana', 'Finland', 'Nigeria', 'Central African Republic', 'Morocco', 'Bulgaria', 'Nauru', 'Sweden', 'Kenya', 'Nicaragua', 'Ghana', 'Burkina Faso', 'Czech Republic', 'Uzbekistan', 'Ireland', 'Barbados', 'Tajikistan', 'Poland', 'Yugoslavia', 'Saint Lucia', 'Romania', 'Cameroon', 'Argentina', 'El Salvador', 'Malawi', 'Kuwait', 'United States', 'Venezuela', 'Great Britain', 'Kosovo', 'Costa Rica', 'Somalia', 'Greece', 'South Sudan', 'Cayman Islands', 'Algeria', 'Saint Vincent and the Grenadines', 'South Korea', 'Madagascar', 'Belarus', 'France', 'Andorra', 'Spain', 'Sudan', 'Gabon', 'Turkey', 'Niger', 'Turkmenistan', 'Samoa', 'Bolivia', 'Mongolia', 'Vietnam', 'Seychelles', 'Eritrea', 'Zambia', 'San Marino', 'Portugal', 'Bangladesh', 'Marshall Islands', 'Saudi Arabia', 'Panama', 'Tanzania', 'India', 'Togo', 'Liechtenstein', 'Indonesia', 'China', 'Zimbabwe', 'Lithuania', 'Suriname', 'Ethiopia', 'East Germany', 'Sierra Leone', 'Benin', 'Mozambique', 'Ukraine', 'Namibia', 'Colombia', 'Peru', 'Afghanistan', 'Egypt', 'Germany', 'Djibouti', 'Sri Lanka',
 'BHU', 'RUS', 'FSM', 'IRI', 'KEN', 'CRO', 'COM', 'MOZ', 'DMA', 'PAR', 'PAN', 'SVK', 'SYR', 'MHL', 'SAM', 'YUG', 'UGA', 'IVB', 'NED', 'IND', 'PLE', 'ETH', 'CPV', 'SAA', 'ZAM', 'KIR', 'NOR', 'USA', 'SLO', 'MAL', 'EGY', 'CZE', 'MTN', 'MON', 'CHI', 'THA', 'FRA', 'KUW', 'ISV', 'HAI', 'NBO', 'SLE', 'STP', 'LTU', 'CHA', 'SEN', 'VAN', 'ECU', 'INA', 'UZB', 'BOT', 'TKM', 'BUR', 'SGP', 'RWA', 'RHO', 'SWZ', 'MDA', 'ANZ', 'LES', 'GDR', 'BRN', 'SUR', 'FIN', 'BRU', 'CIV', 'SUD', 'ISL', 'BRA', 'BEN', 'BDI', 'JOR', 'ROT', 'EST', 'BAN', 'GBR', 'UKR', 'NFL', 'NEP', 'FIJ', 'DEN', 'BIH', 'KOR', 'AZE', 'CMR', 'KOS', 'POR', 'TOG', 'MRI', 'LUX', 'SEY', 'UAE', 'ISR', 'ESP', 'CHN', 'CGO', 'DOM', 'PLW', 'ANG', 'NIG', 'MGL', 'HKG', 'NRU', 'GER', 'ALG', 'KAZ', 'TCH', 'EUN', 'GRE', 'LIE', 'ROU', 'UNK', 'LCA', 'BLR', 'DJI', 'HON', 'CRT', 'MLT', 'GUI', 'BIZ', 'OMA', 'SSD', 'GEQ', 'TAN', 'TUN', 'LAT', 'LBR', 'VNM', 'GUA', 'CAN', 'PUR', 'GRN', 'QAT', 'BOH', 'SRI', 'GHA', 'IRQ', 'URS', 'MDV', 'BAR', 'PHI', 'SOM', 'PAK', 'IRL', 'MAW', 'RSA', 'TUR', 'SCG', 'URU', 'PNG', 'POL', 'SUI', 'YEM', 'AHO', 'ARG', 'CAM', 'VIN', 'GBS', 'BAH', 'LAO', 'MNE', 'NCA', 'GUY', 'CYP', 'KSA', 'SOL', 'TJK', 'PER', 'CAF', 'SWE', 'CUB', 'GAB', 'FRG', 'ARU', 'VEN', 'ERI', 'YMD', 'MEX', 'YAR', 'KGZ', 'ASA', 'CRC', 'BOL', 'AND', 'TGA', 'SKN', 'ZIM', 'MYA', 'COK', 'MAS', 'TTO', 'MKD', 'MAD', 'HUN', 'LIB', 'NZL', 'CAY', 'ALB', 'COL', 'VIE', 'SMR', 'SRB', 'MAR', 'BUL', 'MLI', 'BEL', 'GAM', 'PRK', 'NAM', 'TUV', 'IOA', 'TPE', 'ARM', 'NGR', 'ANT', 'AUT', 'JPN', 'ITA', 'ESA', 'JAM', 'BER', 'COD', 'LBA', 'GEO', 'GUM', 'AFG', 'UAR', 'TLS', 'WIF', 'AUS'])
 
@@ -245,10 +282,14 @@ elif arg.top:
     show_data(user_data)
 
 elif arg.total:
-    pass
+    user_year = arg.total
+    user_data_dict = total(user_year, file_lines)
+    user_data = datas_task_2(user_data_dict)
+    show_data(user_data)
 
 elif arg.overall:
-    pass
+    user_country = arg.overall
+    user_data = overall_best_year(file_lines, user_country)
 
 
 if arg.output:
@@ -262,17 +303,7 @@ delete_text('task_4.txt')
 
 
 # task2
-def athletes_searcher(input_file, year_index, year_from_user, team_index, team_from_user, noc_index, medal_index):
-    medal_list = ['Gold', 'Silver', 'Bronze']
-    athletes_dictionary = {}
-    for line in input_file:
-        if line[year_index] == year_from_user:
-            if (line[team_index] == team_from_user or line[noc_index] == team_from_user) and line[
-                medal_index] in medal_list:
-                athletes_dictionary[line['NAME']] = {'discipline': line['EVENT'],
-                                                     'medal': line['MEDAL'],
-                                                     'place': place_dict[line['MEDAL']]}
-    return athletes_dictionary
+
 
 
 def the_first_year_and_medals_dict(input_list, team, noc, u_country, file_year, medal):
@@ -289,81 +320,9 @@ def the_first_year_and_medals_dict(input_list, team, noc, u_country, file_year, 
     return the_first_year, years_medal_dict
 
 
-def parse_arguments():
-    parser = argparse.ArgumentParser(description="Olympic Data Processing")
-
-#2 task
-import argparse
-
-def total_medals(data, year):
-    country_medals = {}
-    for athlete in data:
-        if athlete['Year'] == year and athlete['Medal']:
-            team = athlete['Team']
-            medal = athlete['Medal']
-            if team not in country_medals:
-                country_medals[team] = {'Gold': 0, 'Silver': 0, 'Bronze': 0}
-            country_medals[team][medal] += 1
-
-    results = []
-    for team, medals in sorted(country_medals.items()):
-        results.append(f"{team}: Gold: {medals['Gold']}, Silver: {medals['Silver']}, Bronze: {medals['Bronze']}")
-    return results
-
-def overall_best_year(data, countries):
-    country_yearly_medals = {country: {} for country in countries}
-
-    for athlete in data:
-        team = athlete['Team']
-        year = athlete['Year']
-        if team in countries and athlete['Medal']:
-            if year not in country_yearly_medals[team]:
-                country_yearly_medals[team][year] = 0
-            country_yearly_medals[team][year] += 1
-
-    results = []
-    for country, yearly_medals in country_yearly_medals.items():
-        if yearly_medals:
-            best_year = max(yearly_medals, key=yearly_medals.get)
-            results.append(f"{country}: Best Year: {best_year}, Medals: {yearly_medals[best_year]}")
-        else:
-            results.append(f"{country}: No medals won.")
-    return results
-
-# def main():
-#     parser = argparse.ArgumentParser(description="Analyze Olympic medal data.")
-#     parser.add_argument("action", choices=["total_medals", "overall_best_year"],
-#                         help="Action to perform: total_medals or overall_best_year")
-#     parser.add_argument("--year", type=int, help="Year to analyze (for total_medals)")
-#     parser.add_argument("--countries", nargs="+", help="List of countries to analyze (for overall_best_year)")
-#     parser.add_argument("--data_file", type=str, required=True, help="Path to the data file in JSON format")
-#
-#     args = parser.parse_args()
-#
-#     import json
-#     with open(args.data_file, "r") as f:
-#         data = json.load(f)
-#
-#     if args.action == "total_medals":
-#         if not args.year:
-#             parser.error("The --year argument is required for total_medals.")
-#         result = total_medals(data, args.year)
-#         for line in result:
-#             print(line)
-#     elif args.action == "overall_best_year":
-#         if not args.countries:
-#             parser.error("The --countries argument is required for overall_best_year.")
-#         result = overall_best_year(data, args.countries)
-#         for line in result:
-#             print(line)
 
 
-    file_year = 'YEAR'
-    medal = 'MEDAL'
-    first_year, medals_dict = the_first_year_and_medals_dict(data, 'TEAM', 'NOC', args.u_country, file_year, medal)
 
-    print(f"First year of participation: {first_year}")
-    print(f"Medals by year: {medals_dict}")
 
 
 
