@@ -162,25 +162,27 @@ def total(user_year, input_file):
                 data[rows[TEAM]][rows[MEDAL]] += 1
     return data
 
-def overall_best_year(data, countries):
-    country_yearly_medals = {country: {} for country in countries}
+def overall(user_countries, input_file):
+    countries = {}
+    for country in user_countries:
+        countries[country] = {}
+        for row in input_file:
+            if row[TEAM] == country:
+                if row[YEAR] in countries[country] and row[MEDAL] in medals_dict:
+                    countries[country][row[YEAR]] += 1
+                elif row[YEAR] not in countries[country] and row[MEDAL] in medals_dict:
+                    countries[country][row[YEAR]] = 1
+        countries[country] = dict(sorted(countries[country].items(), key=lambda x: x[1], reverse=True))
+    return countries
 
-    for athlete in data:
-        team = athlete['Team']
-        year = athlete['Year']
-        if team in countries and athlete['Medal']:
-            if year not in country_yearly_medals[team]:
-                country_yearly_medals[team][year] = 0
-            country_yearly_medals[team][year] += 1
-
-    results = []
-    for country, yearly_medals in country_yearly_medals.items():
-        if yearly_medals:
-            best_year = max(yearly_medals, key=yearly_medals.get)
-            results.append(f"{country}: Best Year: {best_year}, Medals: {yearly_medals[best_year]}")
-        else:
-            results.append(f"{country}: No medals won.")
-    return results
+def data_task_3(data_country):
+    data = []
+    countries_list = []
+    for country in data_country:
+        countries_list.append(list(data_country[country].items()))
+    for country, years, i in zip(data_country, countries_list, range(len(countries_list))):
+        data.append(f'{country} : {years[i][0]} - {years[i][1]} medals')
+    return data
 
 def datas_task_2 (country_dict : dict):
     data = []
@@ -289,7 +291,9 @@ elif arg.total:
 
 elif arg.overall:
     user_country = arg.overall
-    user_data = overall_best_year(file_lines, user_country)
+    user_data_dict = overall(user_country, file_lines)
+    user_data = data_task_3(user_data_dict)
+    show_data(user_data)
 
 
 if arg.output:
@@ -300,33 +304,4 @@ if arg.output:
     except Exception:
         print('Something went wrong')
 delete_text('task_4.txt')
-
-
-# task2
-
-
-
-def the_first_year_and_medals_dict(input_list, team, noc, u_country, file_year, medal):
-    the_first_year = 2024
-    years_medal_dict = {}
-    for row in input_list:
-        if row[team] == u_country or row[noc] == u_country:
-            if int(year_validation(row[file_year])) < the_first_year:
-                the_first_year = int(row[file_year])
-            if row[file_year] in years_medal_dict and row[medal] in medals_dict:
-                years_medal_dict[row[file_year]] += 1
-            elif row[medal] in medals_dict:
-                years_medal_dict[row[file_year]] = 1
-    return the_first_year, years_medal_dict
-
-
-
-
-
-
-
-
-
-
-
 
