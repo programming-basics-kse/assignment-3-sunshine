@@ -24,6 +24,8 @@ def datas (athletes_dictionary, medals_dictionary, team, year):
     data.append(f'\nThe total amount of the medals of the {team} team in {year}:\nGold: {medals_dictionary['Gold']}\nSilver: {medals_dictionary['Silver']}\nBronze: {medals_dictionary['Bronze']}')
     return data
 
+
+
 def the_first_year_and_medals_dict(input_list,team, noc, u_country, file_year, medal):
     the_first_year = 2024
     years_medal_dict = {}
@@ -254,74 +256,71 @@ if arg.output:
 delete_text('task_4.txt')
 
 
+# task2
+def athletes_searcher(input_file, year_index, year_from_user, team_index, team_from_user, noc_index, medal_index):
+    medal_list = ['Gold', 'Silver', 'Bronze']
+    athletes_dictionary = {}
+    for line in input_file:
+        if line[year_index] == year_from_user:
+            if (line[team_index] == team_from_user or line[noc_index] == team_from_user) and line[
+                medal_index] in medal_list:
+                athletes_dictionary[line['NAME']] = {'discipline': line['EVENT'],
+                                                     'medal': line['MEDAL'],
+                                                     'place': place_dict[line['MEDAL']]}
+    return athletes_dictionary
 
-#2 task
-import argparse
 
-def total_medals(data, year):
-    country_medals = {}
-    for athlete in data:
-        if athlete['Year'] == year and athlete['Medal']:
-            team = athlete['Team']
-            medal = athlete['Medal']
-            if team not in country_medals:
-                country_medals[team] = {'Gold': 0, 'Silver': 0, 'Bronze': 0}
-            country_medals[team][medal] += 1
+def the_first_year_and_medals_dict(input_list, team, noc, u_country, file_year, medal):
+    the_first_year = 2024
+    years_medal_dict = {}
+    for row in input_list:
+        if row[team] == u_country or row[noc] == u_country:
+            if int(year_validation(row[file_year])) < the_first_year:
+                the_first_year = int(row[file_year])
+            if row[file_year] in years_medal_dict and row[medal] in medals_dict:
+                years_medal_dict[row[file_year]] += 1
+            elif row[medal] in medals_dict:
+                years_medal_dict[row[file_year]] = 1
+    return the_first_year, years_medal_dict
 
-    results = []
-    for team, medals in sorted(country_medals.items()):
-        results.append(f"{team}: Gold: {medals['Gold']}, Silver: {medals['Silver']}, Bronze: {medals['Bronze']}")
-    return results
 
-def overall_best_year(data, countries):
-    country_yearly_medals = {country: {} for country in countries}
+def parse_arguments():
+    parser = argparse.ArgumentParser(description="Olympic Data Processing")
 
-    for athlete in data:
-        team = athlete['Team']
-        year = athlete['Year']
-        if team in countries and athlete['Medal']:
-            if year not in country_yearly_medals[team]:
-                country_yearly_medals[team][year] = 0
-            country_yearly_medals[team][year] += 1
+    parser.add_argument('input_file', type=str, help='Вкажіть шлях до вхідного CSV файлу')
+    parser.add_argument('year_from_user', type=str, help='Рік для пошуку атлетів')
+    parser.add_argument('team_from_user', type=str, help='Країна або команда для пошуку атлетів')
 
-    results = []
-    for country, yearly_medals in country_yearly_medals.items():
-        if yearly_medals:
-            best_year = max(yearly_medals, key=yearly_medals.get)
-            results.append(f"{country}: Best Year: {best_year}, Medals: {yearly_medals[best_year]}")
-        else:
-            results.append(f"{country}: No medals won.")
-    return results
+    parser.add_argument('u_country', type=str, help='Країна для пошуку медалей')
 
-def main():
-    parser = argparse.ArgumentParser(description="Analyze Olympic medal data.")
-    parser.add_argument("action", choices=["total_medals", "overall_best_year"],
-                        help="Action to perform: total_medals or overall_best_year")
-    parser.add_argument("--year", type=int, help="Year to analyze (for total_medals)")
-    parser.add_argument("--countries", nargs="+", help="List of countries to analyze (for overall_best_year)")
-    parser.add_argument("--data_file", type=str, required=True, help="Path to the data file in JSON format")
+    return parser.parse_args()
 
-    args = parser.parse_args()
 
-    import json
-    with open(args.data_file, "r") as f:
-        data = json.load(f)
+if __name__ == '__main__':
+    args = parse_arguments()
 
-    if args.action == "total_medals":
-        if not args.year:
-            parser.error("The --year argument is required for total_medals.")
-        result = total_medals(data, args.year)
-        for line in result:
-            print(line)
-    elif args.action == "overall_best_year":
-        if not args.countries:
-            parser.error("The --countries argument is required for overall_best_year.")
-        result = overall_best_year(data, args.countries)
-        for line in result:
-            print(line)
+    with open(args.input_file, 'r') as f:
+        input_file = csv.DictReader(f)
+        data = list(input_file)
 
-if __name__ == "__main__":
-    main()
+    year_index = 'YEAR'
+    team_index = 'TEAM'
+    noc_index = 'NOC'
+    medal_index = 'MEDAL'
+
+    athletes = athletes_searcher(data, year_index, args.year_from_user, team_index, args.team_from_user, noc_index,
+                                 medal_index)
+    print(f"Athletes data: {athletes}")
+
+
+    file_year = 'YEAR'
+    medal = 'MEDAL'
+    first_year, medals_dict = the_first_year_and_medals_dict(data, 'TEAM', 'NOC', args.u_country, file_year, medal)
+
+    print(f"First year of participation: {first_year}")
+    print(f"Medals by year: {medals_dict}")
+
+
 
 
 
